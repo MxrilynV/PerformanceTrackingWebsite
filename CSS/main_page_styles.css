@@ -59,7 +59,7 @@ h2 {
 
 body {
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-    background-color: #dcb5dc;
+    background-color: #5670b2;
 
 }
 
@@ -107,8 +107,8 @@ img {
     width: auto;
     padding: 5px;
     margin: 5px auto;
-    border: 5px solid rgb(106, 0, 124);
-    background-color: #f5dfc6;
+    border: 5px solid rgb(0, 6, 124);
+    background-color: #c6cff5;
     text-align: center;
     display: flex;
     align-items: center;
