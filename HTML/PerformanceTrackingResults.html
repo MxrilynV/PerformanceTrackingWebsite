@@ -1,0 +1,149 @@
+<!DOCTYPE html> <!-- Tells this browser that this is an HTML5 document -->
+<html> <!-- main html tag-->
+
+    <head>
+    
+        <meta charset="UTF-8"> <!-- Tells the browser to use UTF-8 encoding. So english characters are turned into bytes--> 
+
+        <meta name="viewport" content="device-width, initial-scale=1"  > <!--lets the website resize itself to whatever device the user is using--> 
+
+        <title>Performance Tracking Results</title>
+        <link rel="stylesheet" type="text/css" href="\CSS\main_page_styles.css">
+        <!--<script src="./Server/script.js"></script> -->
+        <script src="./Server/httpServer.js"></script>
+        
+
+    
+
+
+    </head>
+
+    <body>
+
+        <a href="./MainPage.html"> Back to Main Page</a> <br>
+        <div style="text-align: center;">
+            <h1> Performance Tracking Results</h1>
+        </div>
+        <br>
+        
+
+        <h3>Time: </h3>
+        <h3><p><div id="timeRowing"></div></p> </h3>>
+
+        <hr>
+
+        <!-- <h3>Weight: </h3>
+        <h3> <h3><div id="weight"></div></h3> </h3>
+        <br>
+
+        <hr> -->
+
+       <h3>Speed: </h3>
+       <h3> <p><div id="velocity"></div></p> </h3> 
+        <hr>
+
+        <h3>Distance: </h3>
+        <h3><p><div id="distance"></div></p> </h3>
+        <hr>
+
+        <h3>Left Foot Force: </h3>
+        <h3><p><div id="leftFootForce"></div></p> </h3>
+        <hr>
+
+        <h3>Right Foot Force: </h3>
+        <h3><p><div id="rightFootForce"></div></p> </h3>
+        <hr>
+
+        <script>
+            const leftFootForceContainer = document.getElementById('leftFootForce');
+            const rightFootForceContainer = document.getElementById('rightFootForce');
+
+            const timeRowingContainer = document.getElementById('timeRowing');
+            const velocityContainer = document.getElementById('velocity');
+            const distanceContainer = document.getElementById('distance');
+            
+          
+            // Create a WebSocket connection
+            const socket = new WebSocket('ws://localhost:4001');
+          
+            // Listen for WebSocket messages
+            socket.addEventListener('message', function (event) {
+                const message = JSON.parse(event.data);
+
+                 if (message.type === 'dataUpdate') {
+                    const dataArray = message.data.data;
+                    const dataString = String.fromCharCode(...dataArray);
+                    if(dataString.includes("rightFootForce")){
+
+                        const dataArray = message.data.data; // Access the inner data array
+                        const finalData = String.fromCharCode(...dataArray); 
+                        rightFootForceContainer.innerHTML = finalData; // Display the string in the HTML element
+            
+                    }
+                    else if(dataString.includes("leftFootForce")){
+                        const dataArray = message.data.data; // Access the inner data array
+                        const finalData = String.fromCharCode(...dataArray); 
+                        leftFootForceContainer.innerHTML = finalData;
+                    }
+                    else if(dataString.includes("velocity")){
+                        const dataArray = message.data.data; // Access the inner data array
+                        const finalData = String.fromCharCode(...dataArray); 
+                        velocityContainer.innerHTML = finalData;
+                    }
+                    else if(dataString.includes("distance")){
+                        const dataArray = message.data.data; // Access the inner data array
+                        const finalData = String.fromCharCode(...dataArray); 
+                        distanceContainer.innerHTML = finalData;
+                    }
+                    else if(dataString.includes("timeRowing")){
+                        const dataArray = message.data.data; // Access the inner data array
+                        const finalData = String.fromCharCode(...dataArray); 
+                        timeRowingContainer.innerHTML = finalData;
+                    }
+                 
+                }
+
+
+                // if (message.type === 'leftFootForce'){
+                //     const data = message.data;
+                //     leftFootForceContainer.innerHTML = data;
+                // }
+                // else if (message.type === 'rightFootForce'){
+                //     const data = message.data;
+                //     rightFootForceContainer.innerHTML = data;
+                // }
+
+                // else if (message.type === 'velocity'){
+                //     const data = message.data;
+                //     velocityContainer.innerHTML = data;
+                // }
+
+                // else if (message.type === 'distance'){
+                //     const data = message.data;
+                //     distanceContainer.innerHTML = data;
+                // }
+
+                // else if (message.type === 'timeRowing'){
+                //     timeRowingContainer.innerHTML = message.data;
+                // }
+
+               
+                
+
+
+                // if (message.type === 'dataUpdate') {
+                //     const dataArray = message.data.data; // Access the inner data array
+                //     const dataString = String.fromCharCode(...dataArray); 
+                //     dataContainer.innerHTML = dataString; // Display the string in the HTML element
+                // }
+            });
+          </script>
+        
+        <hr>
+
+
+
+        <script src="./../Server/script.js"></script>
+        
+    </body>
+</html>
