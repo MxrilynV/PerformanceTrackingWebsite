@@ -27,16 +27,14 @@
         <br>
         
 
-        <h3>Time: </h3>
-        <h3><p><div id="timeRowing"></div></p> </h3>>
+        <!-- <h3>Time: </h3>
+        <h3><p><div id="timeRowing"></div></p> </h3>
+        <hr> -->
+
+        <h3>Rep Counter: </h3>
+        <h3> <h3><div id="repCounter"></div></h3> </h3>
 
         <hr>
-
-        <!-- <h3>Weight: </h3>
-        <h3> <h3><div id="weight"></div></h3> </h3>
-        <br>
-
-        <hr> -->
 
        <h3>Speed: </h3>
        <h3> <p><div id="velocity"></div></p> </h3> 
@@ -54,6 +52,11 @@
         <h3><p><div id="rightFootForce"></div></p> </h3>
         <hr>
 
+        <h3>Incoming Data:</h3>
+        <h3><p><div id="unknownData"></div></p> </h3>
+        <hr>
+
+
         <script>
             const leftFootForceContainer = document.getElementById('leftFootForce');
             const rightFootForceContainer = document.getElementById('rightFootForce');
@@ -61,6 +64,8 @@
             const timeRowingContainer = document.getElementById('timeRowing');
             const velocityContainer = document.getElementById('velocity');
             const distanceContainer = document.getElementById('distance');
+            const repCounterContainer = document.getElementById('repCounter');
+            const unknownDataContainer = document.getElementById('unknownData');
             
           
             // Create a WebSocket connection
@@ -73,7 +78,14 @@
                  if (message.type === 'dataUpdate') {
                     const dataArray = message.data.data;
                     const dataString = String.fromCharCode(...dataArray);
-                    if(dataString.includes("rightFootForce")){
+                    
+                    if(dataString.includes("repCounter")){
+                        const dataArray = message.data.data; // Access the inner data array
+                        const finalData = String.fromCharCode(...dataArray); 
+                        repCounterContainer.innerHTML = finalData;
+                    }
+
+                    else if(dataString.includes("rightFootForce")){
 
                         const dataArray = message.data.data; // Access the inner data array
                         const finalData = String.fromCharCode(...dataArray); 
@@ -95,10 +107,12 @@
                         const finalData = String.fromCharCode(...dataArray); 
                         distanceContainer.innerHTML = finalData;
                     }
-                    else if(dataString.includes("timeRowing")){
+            
+
+                    else{
                         const dataArray = message.data.data; // Access the inner data array
                         const finalData = String.fromCharCode(...dataArray); 
-                        timeRowingContainer.innerHTML = finalData;
+                        unknownDataContainer.innerHTML = finalData;
                     }
                  
                 }
@@ -139,7 +153,7 @@
             });
           </script>
         
-        <hr>
+      
 
 
 
